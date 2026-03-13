@@ -46,16 +46,53 @@
  */
 export function createFilter(field, operator, value) {
   // Your code here
+  return function(obj)
+  {
+    if (operator=== '>') return obj[field] > value;
+    if (operator=== '<') return obj[field] < value;
+    if (operator=== '>=') return obj[field] >= value;
+    if (operator=== '<=') return obj[field] <= value;
+    if (operator=== '===') return obj[field] === value;
+    else return false;
+    //can use switchhhhh caseeeeeeee
+
+  }
 }
 
 export function createSorter(field, order = "asc") {
   // Your code here
+  return function(a,b)
+  {
+    const valA=a[field];
+    const valB=b[field];
+    if(valA===valB) return 0;
+    if(order==='asc')
+    {
+      return valA>valB ?1 :-1;
+    }
+    else return valA<valB ?1 :-1;
+  }
 }
 
 export function createMapper(fields) {
   // Your code here
+  return function(obj)
+  {
+    let result={};
+    for(let field of fields)
+    {
+      result[field]=obj[field];
+    }
+    return result;
+  }
 }
 
 export function applyOperations(data, ...operations) {
   // Your code here
+  if (!Array.isArray(data)) return [];
+  for(let operation of operations)
+  {
+    data=operation(data);
+  }
+  return data;
 }

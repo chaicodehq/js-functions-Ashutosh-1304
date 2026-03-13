@@ -1,3 +1,5 @@
+import { registry } from "zod/v4/core";
+
 /**
  * 🌶️ Masala Spice Blender - Function Composition
  *
@@ -54,28 +56,59 @@
  */
 export function pipe(...fns) {
   // Your code here
+  return function(x)
+  {
+    if(fns.length==0) return x;
+    for(let fn of fns)
+    {
+      x=fn(x);
+    }
+    return x;
+  }
 }
 
 export function compose(...fns) {
   // Your code here
+  return function(x)
+  {
+    if(fns.length==0) return x;
+    const reversed=fns.reverse();
+    for(let fn of reversed)
+    {
+      x=fn(x);
+    }
+    return x;
+  }
 }
 
 export function grind(spice) {
   // Your code here
+  return { ...spice, form: "powder" };
 }
 
 export function roast(spice) {
   // Your code here
+  return { ...spice, roasted: true, aroma: "strong" };
 }
 
 export function mix(spice) {
   // Your code here
+  return { ...spice, mixed: true };
 }
 
 export function pack(spice) {
   // Your code here
+  return { ...spice, packed: true, label: `${spice.name} Masala` };
 }
 
 export function createRecipe(steps) {
   // Your code here
+  if(!Array.isArray(steps) || steps.length==0) return (x=>x);
+  const stepsNew= steps.map(step => {
+    if(step==="grind") return grind;
+    else if(step==="roast") return roast;
+    else if(step==="mix") return mix;
+    else if(step==="pack") return pack;
+  }).filter(step => step!==undefined)
+  return pipe(...stepsNew);
 }

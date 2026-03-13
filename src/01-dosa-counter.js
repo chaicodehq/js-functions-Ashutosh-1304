@@ -33,4 +33,36 @@
  */
 export function calculateDosaOrder(type, quantity = 1, isSpicy = false) {
   // Your code here
+  if(typeof type!=='string' || Number.isNaN(quantity) || quantity<=0) return null;
+  if(type==='plain')
+    {
+      if (isSpicy) return { type: "plain", quantity: quantity, pricePerDosa: 50, total: 50*quantity };
+      else return { type: "plain", quantity: quantity, pricePerDosa: 40, total: 40*quantity }
+    }
+  else if(type==='masala')
+    {
+      if (isSpicy) return { type: "masala", quantity: quantity, pricePerDosa: 70, total: 70*quantity };
+      else return { type: "masala", quantity: quantity, pricePerDosa: 60, total: 60*quantity }
+    }
+  else if(type==='onion')
+    {
+      if (isSpicy) return { type: "onion", quantity: quantity, pricePerDosa: 60, total: 60*quantity };
+      else return { type: "onion", quantity: quantity, pricePerDosa: 50, total: 50*quantity }
+    }
+  else if(type==='butter')
+    {
+      if (isSpicy) return { type: "butter", quantity: quantity, pricePerDosa: 80, total: 80*quantity };
+      else return { type: "butter", quantity: quantity, pricePerDosa: 70, total: 70*quantity }
+    }
+  else if(type==='paper')
+    {
+      if (isSpicy) return { type: "paper", quantity: quantity, pricePerDosa: 100, total: 100*quantity };
+      else return { type: "paper", quantity: quantity, pricePerDosa: 90, total: 90*quantity }
+    }
+  else if(type==='cheese')
+    {
+      if (isSpicy) return { type: "cheese", quantity: quantity, pricePerDosa: 90, total: 90*quantity };
+      else return { type: "cheese", quantity: quantity, pricePerDosa: 80, total: 80*quantity }
+    }
+  return null;
 }

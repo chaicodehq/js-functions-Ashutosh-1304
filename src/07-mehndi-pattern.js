@@ -54,20 +54,55 @@
  */
 export function repeatChar(char, n) {
   // Your code here
+  if(typeof char!=='string' || char=="") return "";
+  if(n<=0) return "";
+  return char+repeatChar(char,n-1);
 }
 
 export function sumNestedArray(arr) {
   // Your code here
+    if (!Array.isArray(arr)) return 0;
+  let sum=0;
+  for(let i=0;i<arr.length;i++){
+    if(Array.isArray(arr[i])) sum= sum+sumNestedArray(arr[i]);
+    else if(typeof arr[i]==='number') sum=sum+arr[i];
+  }
+  return sum;
 }
 
 export function flattenArray(arr) {
   // Your code here
+  if(!Array.isArray(arr)) return [];
+  let ans=[];
+  for(let i=0;i<arr.length;i++)
+  {
+    if(Array.isArray(arr[i])) ans=ans.concat(flattenArray(arr[i]));
+    else ans.push(arr[i]);
+  }
+  return ans;
+
 }
 
 export function isPalindrome(str) {
   // Your code here
+  if(typeof str !== 'string') return false;
+  str=str.toLowerCase();
+  if(str.length<=1) return true;
+  if(str.at(0) === str.at(-1))
+  {
+    const strNew = str.slice(1,str.length-1);
+    return isPalindrome(strNew);
+  }
+  return false;
+
 }
 
 export function generatePattern(n) {
   // Your code here
+  if(!Number.isInteger(n) || n<=0) return [];
+  if(n===1) return ['*'];
+  const upper = generatePattern(n-1);
+  const mid='*'.repeat(n);
+  return [...upper.slice(0,n-1),mid,...upper.slice(0,n-1).reverse()];
+
 }

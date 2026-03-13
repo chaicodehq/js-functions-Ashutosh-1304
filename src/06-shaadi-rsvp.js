@@ -47,16 +47,29 @@
  */
 export function processGuests(guests, filterFn) {
   // Your code here
+  if(typeof filterFn!== 'function'|| !Array.isArray(guests)) return [];
+  return guests.filter(x=>filterFn(x));
 }
 
 export function notifyGuests(guests, notifyCallback) {
   // Your code here
+  if(typeof notifyCallback!== 'function'|| !Array.isArray(guests)) return [];
+  return guests.map(x=>notifyCallback(x));
 }
 
 export function handleRSVP(guest, onAccept, onDecline) {
   // Your code here
+  if(typeof onAccept!== 'function'||typeof onDecline!== 'function'|| guest==null ||guest==undefined) return null;
+  if(guest.rsvp==='yes') return onAccept(guest);
+  else if(guest.rsvp==='no') return onDecline(guest);
+  else return null;
 }
 
 export function transformGuestList(guests, ...transformFns) {
   // Your code here
+  if(!Array.isArray(guests)) return [];
+  transformFns.forEach(
+    x => guests=x(guests)
+  )
+  return guests;
 }

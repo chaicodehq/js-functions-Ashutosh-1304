@@ -1,3 +1,4 @@
+
 /**
  * 🎨 Holi Color Mixer - Pure Functions
  *
@@ -55,20 +56,61 @@
  */
 export function mixColors(color1, color2) {
   // Your code here
+  if (!color1 || !color2) return null;
+  const newName=`${color1.name}-${color2.name}`;
+  const r=Math.round((color1.r+color2.r)/2);
+  const g=Math.round((color1.g+color2.g)/2);
+  const b=Math.round((color1.b+color2.b)/2);
+  return {
+    name:newName,
+    r:r,
+    g:g,
+    b:b
+  }
 }
 
 export function adjustBrightness(color, factor) {
   // Your code here
+  if(color===null || typeof factor!=='number')  return null;
+  let r=Math.round(color.r*factor);
+  let g=Math.round(color.g*factor);
+  let b=Math.round(color.b*factor);
+  if(r>255) r=255;
+  if(g>255) g=255;
+  if(b>255) b=255;
+  return {
+    name:color.name,
+    r:r,
+    g:g,
+    b:b
+  }
 }
 
 export function addToPalette(palette, color) {
   // Your code here
+  if(!Array.isArray(palette)) return [color];
+  if(!color) return [...palette];
+  return [...palette, color];
 }
 
 export function removeFromPalette(palette, colorName) {
   // Your code here
+  if(!Array.isArray(palette)) return [];
+  return palette.filter(color => color.name !== colorName);
 }
 
 export function mergePalettes(palette1, palette2) {
   // Your code here
+  const p1 = Array.isArray(palette1) ? palette1 : [];
+  const p2 = Array.isArray(palette2) ? palette2 : [];
+  const merged = [...p1];
+  const names = new Set(p1.map(color => color.name));
+  for (const color of p2) {
+    if (!names.has(color.name)) {
+      merged.push(color);
+      names.add(color.name);
+    }
+  }
+  return merged;
+  
 }

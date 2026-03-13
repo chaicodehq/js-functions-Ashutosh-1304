@@ -46,12 +46,65 @@
  */
 export function createDialogueWriter(genre) {
   // Your code here
+  switch(genre)
+  {
+    case "action":
+      return function(hero,villain){
+        if(hero == "" || hero == undefined 
+          || villain=="" || villain == undefined
+        ) return "...";
+        return `${hero} says: 'Tujhe toh main dekh lunga, ${villain}!'`
+      }
+    case "romance":
+      return function(hero,villain){
+        if(hero == "" || hero == undefined 
+          || villain=="" || villain == undefined
+        ) return "...";
+        return `${hero} whispers: '${villain}, tum mere liye sab kuch ho'`
+      }
+    case "comedy":
+      return function(hero,villain){
+        if(hero == "" || hero == undefined 
+          || villain=="" || villain == undefined
+        ) return "...";
+        return `${hero} laughs: '${villain} bhai, kya kar rahe ho yaar!'`
+      }
+    case "drama":
+      return function(hero,villain){
+        if(hero == "" || hero == undefined 
+          || villain=="" || villain == undefined
+        ) return "...";
+        return `${hero} cries: '${villain}, tune mera sab kuch cheen liya!'`
+      }
+    default:
+      return null;
+    
+  }
 }
 
 export function createTicketPricer(basePrice) {
   // Your code here
+  if(typeof basePrice!=='number'|| basePrice<=0) return null;
+  return function(seatType,isWeekend=false)
+  {
+    let price=basePrice;
+    if(seatType==='gold') price=price*1.5;
+    else if(seatType==='platinum') price=price*2;
+    else if(seatType==='silver') price=price;
+    else return null;
+    if(isWeekend) price=price*1.3;
+    return Math.round(price);
+  }
 }
 
 export function createRatingCalculator(weights) {
   // Your code here
+  if(typeof weights!=='object' || Array.isArray(weights) || weights ==null) return null;
+  return function(scores)
+  {
+    const weightedAvg= 
+    Object.keys(weights).reduce(
+      (sum,key)=> sum + weights[key]*scores[key],0);
+    return Number(weightedAvg.toFixed(1));
+  }
 }
